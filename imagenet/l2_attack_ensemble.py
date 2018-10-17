@@ -100,7 +100,7 @@ class CarliniL2Ensemble:
         
         # prediction BEFORE-SOFTMAX of the model
         input_nvhwc = self.newimg[:, None, :, :, :] + self.noisevecs[None, :, :, :, :]
-        input_hvhwc = tf.clip_by_value(input_nvhwc, 0., 1.)
+        input_nvhwc = tf.clip_by_value(input_nvhwc, 0., 1.)
         input_nhwc = tf.reshape(input_nvhwc, [batch_size * self.noise_count, image_size, image_size, num_channels])
         output_nl = model.predict(input_nhwc)
         self.output_nvl = tf.reshape(output_nl, [batch_size, self.noise_count, num_labels])
